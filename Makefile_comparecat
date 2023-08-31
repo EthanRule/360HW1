@@ -1,0 +1,2 @@
+comparecat: comparecat.c
+	gcc -o comparecat comparecat.c

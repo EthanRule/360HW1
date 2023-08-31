@@ -1,0 +1,2 @@
+cathw: cat.c
+	gcc cat.c -o cathw
