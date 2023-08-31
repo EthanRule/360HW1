@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
 
 void filecopy(FILE *ifp, FILE *ofp)
 {
-	intc;
+	int c;
 	while ((c = getc(ifp)) != EOF)
 		putc(c, ofp);
 }
