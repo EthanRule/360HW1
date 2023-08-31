@@ -12,10 +12,13 @@
  * lseek(file descripter(int), 0, SEEK_SET)
  * read(file descripter(int), buffer(this is where the message will be stored), sizeof buffer);
  * close(file descripter(int))
- *
- *
  * */
 
+/*Resources I used for help:
+ * https://c-for-dummies.com/blog/?p=4711
+ * https://www.geeksforgeeks.org/input-output-system-calls-c-create-open-close-read-write/
+ * https://www.youtube.com/watch?v=CHs9WwvEKdg
+ * */
 
 
 static void filecopy(int ifd, int ofd);
@@ -25,26 +28,47 @@ int main(int argc, char *argv[]) {
 	// complete your code
 	
 	int fd;
-	char buffer[80];
-	char msg[50] = "Hello!";
 
-	fd = open("in1.txt", O_RDWR);
-	printf("fd = %d", fd);
-
-	if (fd != -1) // check to see if the file is valid/opened
-	{
-		printf("in1.txt opened for read write access\n");
-		write(fd, msg, sizeof(msg));
-		lseek(fd, 0, SEEK_SET);
-		read(fd, buffer, sizeof(msg));
-		printf("\n %s was written to my file\n", buffer);
-		close(fd);
-	}
+	if (argc == 1)
+		filecopy(stdin, stdout);
+	else
+		while (--argc > 0)
+			if ((fd = open(*++argv, O_RDONLY)) == -1) // using -1 instead of NULL since itsan int comparrison
+			{
+				error("can't open %s", *argv);
+			}
+			else
+			{
+				filecopy(fd, stdout);
+				close(fd);
+			}
 	return 0;
 }
 
+//	fd = open("in1.txt", O_RDWR);
+//	printf("fd = %d", fd);
+//
+//	if (fd != -1) // check to see if the file is valid/opened
+//	{
+//		printf("in1.txt opened for read write access\n");
+//		write(fd, msg, sizeof(msg));
+//		lseek(fd, 0, SEEK_SET);
+//		read(fd, buffer, sizeof(msg));
+//		printf("\n %s was written to my file\n", buffer);
+//		close(fd);
+//	}
+//	return 0;
+
+
 void filecopy(int ifd, int ofd) {
-	// complete your code
+// complete your code
+	int c;
+	char buffer[BUFSIZ];
+
+	while ((c = read(ifd, buffer, BUFSIZ)) > 0)
+		if (write(ofd, buffer, c) != c) {
+			error("write error");
+		}
 }
 
 // no modification needed
