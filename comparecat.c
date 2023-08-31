@@ -66,6 +66,7 @@ int main(int argc, char **argv) {
 		uint64_t diff;
 		struct timespec start, end;
 		int i;
+		int finalDiff;
 
 	  	// measure time
 		clock_gettime(CLOCK_MONOTONIC, &start);	// mark start time 
@@ -87,6 +88,19 @@ int main(int argc, char **argv) {
                 // calcuate difference
                 diff2 = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
                 printf("Run time of cat = %llu nanoseconds\n", (long long unsigned int) diff2);
+
+	if (diff >= diff2)
+	{
+		finalDiff = diff - diff2;
+		printf("cat: is %d nanoseconds quicker than cat\n", finalDiff);
+	}
+	else
+	{
+		finalDiff = diff2 - diff;
+		printf("cathw: is %d nanoseconds faster than cathw\n", finalDiff);
+	}
+
+	printf("Note: There is a rare case that cat is quicker than cathw\n");
 	return 0;
 }
 
