@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
 	char buffer[80];
 	char msg[50] = "Hello!";
 
-	fd = open("in1.txt", O_RDWR)
+	fd = open("in1.txt", O_RDWR);
 	printf("fd = %d", fd);
 
 	if (fd != -1) // check to see if the file is valid/opened
